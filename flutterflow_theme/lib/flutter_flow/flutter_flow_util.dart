@@ -11,23 +11,18 @@ import 'package:json_path/json_path.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
-
 import 'lat_lng.dart';
 
 export 'keep_alive_wrapper.dart';
 export 'lat_lng.dart';
 export 'place.dart';
 export 'uploaded_file.dart';
-
 export 'flutter_flow_model.dart';
 export 'dart:math' show min, max;
 export 'dart:typed_data' show Uint8List;
 export 'dart:convert' show jsonEncode, jsonDecode;
 export 'package:intl/intl.dart';
 export 'package:page_transition/page_transition.dart';
-
-
-final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 T valueOrDefault<T>(T? value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
@@ -56,8 +51,9 @@ Theme wrapInMaterialDatePickerTheme(
   required double iconSize,
 }) {
   final baseTheme = Theme.of(context);
-  final dateTimeMaterialStateForegroundColor =
-      WidgetStateProperty.resolveWith((states) {
+  final dateTimeMaterialStateForegroundColor = WidgetStateProperty.resolveWith((
+    states,
+  ) {
     if (states.contains(WidgetState.disabled)) {
       return pickerForegroundColor.applyAlpha(0.60);
     }
@@ -70,8 +66,9 @@ Theme wrapInMaterialDatePickerTheme(
     return null;
   });
 
-  final dateTimeMaterialStateBackgroundColor =
-      WidgetStateProperty.resolveWith((states) {
+  final dateTimeMaterialStateBackgroundColor = WidgetStateProperty.resolveWith((
+    states,
+  ) {
     if (states.contains(WidgetState.selected)) {
       return selectedDateTimeBackgroundColor;
     }
@@ -88,24 +85,21 @@ Theme wrapInMaterialDatePickerTheme(
         headlineSmall: headerTextStyle,
         headlineMedium: headerTextStyle,
       ),
-      iconTheme: baseTheme.iconTheme.copyWith(
-        size: iconSize,
-      ),
+      iconTheme: baseTheme.iconTheme.copyWith(size: iconSize),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-            foregroundColor: WidgetStatePropertyAll(
-              actionButtonForegroundColor,
-            ),
-            overlayColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.hovered)) {
-                return actionButtonForegroundColor.applyAlpha(0.04);
-              }
-              if (states.contains(WidgetState.focused) ||
-                  states.contains(WidgetState.pressed)) {
-                return actionButtonForegroundColor.applyAlpha(0.12);
-              }
-              return null;
-            })),
+          foregroundColor: WidgetStatePropertyAll(actionButtonForegroundColor),
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return actionButtonForegroundColor.applyAlpha(0.04);
+            }
+            if (states.contains(WidgetState.focused) ||
+                states.contains(WidgetState.pressed)) {
+              return actionButtonForegroundColor.applyAlpha(0.12);
+            }
+            return null;
+          }),
+        ),
       ),
       datePickerTheme: DatePickerThemeData(
         backgroundColor: pickerBackgroundColor,
@@ -142,44 +136,45 @@ Theme wrapInMaterialTimePickerTheme(
   final baseTheme = Theme.of(context);
   return Theme(
     data: baseTheme.copyWith(
-      iconTheme: baseTheme.iconTheme.copyWith(
-        size: iconSize,
-      ),
+      iconTheme: baseTheme.iconTheme.copyWith(size: iconSize),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-            foregroundColor: WidgetStatePropertyAll(
-              actionButtonForegroundColor,
-            ),
-            overlayColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.hovered)) {
-                return actionButtonForegroundColor.applyAlpha(0.04);
-              }
-              if (states.contains(WidgetState.focused) ||
-                  states.contains(WidgetState.pressed)) {
-                return actionButtonForegroundColor.applyAlpha(0.12);
-              }
-              return null;
-            })),
+          foregroundColor: WidgetStatePropertyAll(actionButtonForegroundColor),
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return actionButtonForegroundColor.applyAlpha(0.04);
+            }
+            if (states.contains(WidgetState.focused) ||
+                states.contains(WidgetState.pressed)) {
+              return actionButtonForegroundColor.applyAlpha(0.12);
+            }
+            return null;
+          }),
+        ),
       ),
       timePickerTheme: baseTheme.timePickerTheme.copyWith(
         backgroundColor: pickerBackgroundColor,
         hourMinuteTextColor: pickerForegroundColor,
         dialHandColor: selectedDateTimeBackgroundColor,
-        dialTextColor: WidgetStateColor.resolveWith((states) =>
-            states.contains(WidgetState.selected)
-                ? selectedDateTimeForegroundColor
-                : pickerForegroundColor),
-        dayPeriodBorderSide: BorderSide(
-          color: pickerForegroundColor,
+        dialTextColor: WidgetStateColor.resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected)
+                  ? selectedDateTimeForegroundColor
+                  : pickerForegroundColor,
         ),
-        dayPeriodTextColor: WidgetStateColor.resolveWith((states) =>
-            states.contains(WidgetState.selected)
-                ? selectedDateTimeForegroundColor
-                : pickerForegroundColor),
-        dayPeriodColor: WidgetStateColor.resolveWith((states) =>
-            states.contains(WidgetState.selected)
-                ? selectedDateTimeBackgroundColor
-                : Colors.transparent),
+        dayPeriodBorderSide: BorderSide(color: pickerForegroundColor),
+        dayPeriodTextColor: WidgetStateColor.resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected)
+                  ? selectedDateTimeForegroundColor
+                  : pickerForegroundColor,
+        ),
+        dayPeriodColor: WidgetStateColor.resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected)
+                  ? selectedDateTimeBackgroundColor
+                  : Colors.transparent,
+        ),
         entryModeIconColor: pickerForegroundColor,
       ),
     ),
@@ -203,20 +198,9 @@ Color colorFromCssString(String color, {Color? defaultColor}) {
   return defaultColor ?? Colors.black;
 }
 
-enum FormatType {
-  decimal,
-  percent,
-  scientific,
-  compact,
-  compactLong,
-  custom,
-}
+enum FormatType { decimal, percent, scientific, compact, compactLong, custom }
 
-enum DecimalType {
-  automatic,
-  periodDecimal,
-  commaDecimal,
-}
+enum DecimalType { automatic, periodDecimal, commaDecimal }
 
 String formatNumber(
   num? value, {
@@ -270,8 +254,10 @@ String formatNumber(
       break;
     case FormatType.custom:
       final hasLocale = locale != null && locale.isNotEmpty;
-      formattedValue =
-          NumberFormat(format, hasLocale ? locale : null).format(value);
+      formattedValue = NumberFormat(
+        format,
+        hasLocale ? locale : null,
+      ).format(value);
   }
 
   if (formattedValue.isEmpty) {
@@ -279,9 +265,10 @@ String formatNumber(
   }
 
   if (currency != null) {
-    final currencySymbol = currency.isNotEmpty
-        ? currency
-        : NumberFormat.simpleCurrency().format(0.0).substring(0, 1);
+    final currencySymbol =
+        currency.isNotEmpty
+            ? currency
+            : NumberFormat.simpleCurrency().format(0.0).substring(0, 1);
     formattedValue = '$currencySymbol$formattedValue';
   }
 
@@ -396,55 +383,60 @@ extension FFTextEditingControllerExt on TextEditingController? {
 }
 
 extension IterableExt<T> on Iterable<T> {
-  List<T> sortedList<S extends Comparable>(
-      {S Function(T)? keyOf, bool desc = false}) {
-    final sortedAscending = toList()
-      ..sort(keyOf == null ? null : ((a, b) => keyOf(a).compareTo(keyOf(b))));
+  List<T> sortedList<S extends Comparable>({
+    S Function(T)? keyOf,
+    bool desc = false,
+  }) {
+    final sortedAscending =
+        toList()..sort(
+          keyOf == null ? null : ((a, b) => keyOf(a).compareTo(keyOf(b))),
+        );
     if (desc) {
       return sortedAscending.reversed.toList();
     }
     return sortedAscending;
   }
 
-  List<S> mapIndexed<S>(S Function(int, T) func) => toList()
-      .asMap()
-      .map((index, value) => MapEntry(index, func(index, value)))
-      .values
-      .toList();
+  List<S> mapIndexed<S>(S Function(int, T) func) =>
+      toList()
+          .asMap()
+          .map((index, value) => MapEntry(index, func(index, value)))
+          .values
+          .toList();
 }
 
 // void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-//     MyApp.of(context).setThemeMode(themeMode);
+//  //   MyApp.of(context).setThemeMode(themeMode);
 
-void showSnackbar(
-  BuildContext context,
-  String message, {
-  bool loading = false,
-  int duration = 4,
-}) {
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Row(
-        children: [
-          if (loading)
-            Padding(
-              padding: EdgeInsetsDirectional.only(end: 10.0),
-              child: Container(
-                height: 20,
-                width: 20,
-                child: const CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          Text(message),
-        ],
-      ),
-      duration: Duration(seconds: duration),
-    ),
-  );
-}
+// void showSnackbar(
+//   BuildContext context,
+//   String message, {
+//   bool loading = false,
+//   int duration = 4,
+// }) {
+//   ScaffoldMessenger.of(context).hideCurrentSnackBar();
+//   ScaffoldMessenger.of(context).showSnackBar(
+//     SnackBar(
+//       content: Row(
+//         children: [
+//           if (loading)
+//             Padding(
+//               padding: EdgeInsetsDirectional.only(end: 10.0),
+//               child: Container(
+//                 height: 20,
+//                 width: 20,
+//                 child: const CircularProgressIndicator(
+//                   color: Colors.white,
+//                 ),
+//               ),
+//             ),
+//           Text(message),
+//         ],
+//       ),
+//       duration: Duration(seconds: duration),
+//     ),
+//   );
+// }
 
 extension FFStringExt on String {
   String maybeHandleOverflow({int? maxChars, String replacement = ''}) =>
@@ -472,28 +464,32 @@ extension ListFilterExt<T> on Iterable<T?> {
 
 extension MapFilterExtensions<T> on Map<String, T?> {
   Map<String, T> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value as T)),
-      );
+    entries
+        .where((e) => e.value != null)
+        .map((e) => MapEntry(e.key, e.value as T)),
+  );
 }
 
 extension MapListContainsExt on List<dynamic> {
-  bool containsMap(dynamic map) => map is Map
-      ? any((e) => e is Map && const DeepCollectionEquality().equals(e, map))
-      : contains(map);
+  bool containsMap(dynamic map) =>
+      map is Map
+          ? any(
+            (e) => e is Map && const DeepCollectionEquality().equals(e, map),
+          )
+          : contains(map);
 }
 
 extension ListDivideExt<T extends Widget> on Iterable<T> {
   Iterable<MapEntry<int, Widget>> get enumerate => toList().asMap().entries;
 
-  List<Widget> divide(Widget t, {bool Function(int)? filterFn}) => isEmpty
-      ? []
-      : (enumerate
-          .map((e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
-          .expand((i) => i)
-          .toList()
-        ..removeLast());
+  List<Widget> divide(Widget t, {bool Function(int)? filterFn}) =>
+      isEmpty
+          ? []
+          : (enumerate
+              .map((e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
+              .expand((i) => i)
+              .toList()
+            ..removeLast());
 
   List<Widget> around(Widget t) => addToStart(t).addToEnd(t);
 
@@ -504,8 +500,9 @@ extension ListDivideExt<T extends Widget> on Iterable<T> {
       enumerate.map((e) => e.value).toList()..add(t);
 
   List<Padding> paddingTopEach(double val) =>
-      map((w) => Padding(padding: EdgeInsets.only(top: val), child: w))
-          .toList();
+      map(
+        (w) => Padding(padding: EdgeInsets.only(top: val), child: w),
+      ).toList();
 }
 
 extension StatefulWidgetExtensions on State<StatefulWidget> {
