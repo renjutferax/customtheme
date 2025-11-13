@@ -20,7 +20,8 @@ dependencies:
   google_fonts: ^4.0.4
   image_picker: ^1.2.1
   intl: ^0.20.0
-  internet_file: 1.2.0
+
+
   json_path: ^0.7.6
   mime_type: ^1.0.1
   page_transition: ^2.2.1
